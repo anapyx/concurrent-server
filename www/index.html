@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servidor HTTP Concorrente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #007acc;
+            padding-bottom: 10px;
+        }
+        .info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        ul {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Servidor HTTP Concorrente</h1>
+        
+        <div class="info">
+            <h3>Características</h3>
+            <ul>
+                <li>Pool de threads para processamento concorrente</li>
+                <li>Sistema de logging thread-safe (libtslog)</li>
+                <li>Protocolo HTTP/1.0</li>
+                <li>C++17 com smart pointers e RAII</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h3>Componentes Principais</h3>
+            <ul>
+                <li><strong>HttpServer:</strong> Servidor TCP principal</li>
+                <li><strong>ThreadPool:</strong> Pool de threads trabalhadoras</li>
+                <li><strong>ConnectionQueue:</strong> Fila thread-safe</li>
+                <li><strong>HttpHandler:</strong> Processador HTTP</li>
+                <li><strong>Logger:</strong> Logging thread-safe</li>
+            </ul>
+        </div>
+
+        <p style="text-align: center; color: #666; margin-top: 30px;">
+            Servidor funcionando corretamente!<br>
+            <small>Implementação C++ com Thread Safety</small>
+        </p>
+    </div>
+</body>
+</html>

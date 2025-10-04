@@ -2,10 +2,14 @@
 
 #include <string>
 #include <unordered_map>
+#include <memory>
 
-typedef int SOCKET;
-
-// Estrutura da requisição e resposta HTTP (arquitetura inicial)
+#ifdef _WIN32
+    #include <winsock2.h>
+    typedef SOCKET SOCKET;
+#else
+    typedef int SOCKET;
+#endif
 
 struct HttpRequest {
     std::string method;
@@ -26,16 +30,13 @@ class HttpHandler {
 public:
     explicit HttpHandler(const std::string& documentRoot);
     
-    // Interface principal para processamento de conexões
     void handleConnection(SOCKET clientSocket);
     
 private:
-    // Métodos de processamento (a serem implementados)
     bool parseRequest(const std::string& requestData, HttpRequest& request);
     void handleGetRequest(const HttpRequest& request, HttpResponse& response);
     void sendResponse(SOCKET clientSocket, const HttpResponse& response);
     
-    // Utilitários para servir arquivos
     std::string getMimeType(const std::string& filename);
     std::string readFile(const std::string& filepath);
     bool fileExists(const std::string& filepath);

@@ -1,68 +1,45 @@
 # Servidor HTTP Concorrente
 
-Um sistema de logging concorrente desenvolvido em C++ que demonstra conceitos de programação concorrente: threads, exclusão mútua e sincronização.
+Implementação de servidor HTTP concorrente em C++ demonstrando programação multithreaded e thread safety.
 
 ## Funcionalidades
 
-- **Logging Thread-Safe**: Sistema que permite múltiplas threads gravarem logs simultaneamente sem corrupção
-- **Múltiplos Níveis**: DEBUG, INFO, WARNING, ERROR com filtragem configurável
-- **Timestamps Precisos**: Cada log inclui data/hora com milissegundos
-- **Saída Dupla**: Console e arquivo simultaneamente
-- **API Simples**: Interface clara e fácil de usar
+- **Servidor HTTP/1.0** com suporte a arquivos estáticos
+- **Pool de Threads** para processamento concorrente de conexões
+- **Sistema de Logging Thread-Safe** (libtslog) com múltiplos níveis
+- **Fila Thread-Safe** para gerenciamento de conexões (padrão produtor/consumidor)
+- **Smart Pointers e RAII** para gerenciamento automático de recursos
+- **Sincronização robusta** usando std::mutex, std::condition_variable e std::atomic
+- **Sockets TCP** multiplataforma (Linux/Windows)
 
-## Requisitos
+**Tecnologias:** C++17, CMake, std::thread, pthread
 
-- Linux (Ubuntu/Debian recomendado)
-- GCC com suporte a C++17
-- Make ou CMake
-
-```bash
-# Instalar dependências (Ubuntu/Debian)
-sudo apt install build-essential cmake g++
-```
-
-## Compilação e Execução
+## Como compilar e executar
 
 ```bash
-# Clonar e entrar no diretório
-cd concurrent-server
-
 # Compilar
-make
+cd build
+cmake .. && make
 
-# Executar
-./build/libtslog_test
+# Executar servidor HTTP
+./build/concurrent-server --port 8080 --threads 4
+
+# Testar sistema de logging
+./build/concurrent-server --test-logger
 ```
 
-### Alternativa com CMake
+## Como testar
 
 ```bash
-mkdir -p build && cd build
-cmake ..
-make
-./libtslog_test
+# Terminal 1: Iniciar servidor
+./build/concurrent-server
+
+# Terminal 2: Testar com cliente
+./build/test-client 127.0.0.1 8080
+
+# Teste de carga (10 clientes simultâneos)
+./build/load-test 127.0.0.1 8080 10 5
+
+# Testar logging com múltiplas threads
+./build/concurrent-server --test-logger --test-threads 10
 ```
-
-## Como Usar
-
-O programa oferece um menu para testar o sistema.
-
-### Exemplo de Teste
-
-1. Execute o programa
-2. Escolha opção **1** (Teste com múltiplas threads)
-3. Configure **5 threads** e **10 logs por thread**
-4. Observe a sincronização: 50 mensagens organizadas sem corrupção
-
-## Conceitos Demonstrados
-
-- **Exclusão Mútua**: `std::mutex` protege escrita simultânea
-- **RAII**: `std::lock_guard` para unlock automático
-- **Thread Safety**: Singleton seguro para múltiplas threads
-- **Sincronização**: Coordenação entre threads produtoras
-
-## Arquivos Principais
-
-- `include/logger.h` - Interface da biblioteca
-- `src/logger.cpp` - Implementação thread-safe
-- `src/main.cpp` - Programa de teste CLI

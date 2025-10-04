@@ -1,10 +1,19 @@
 #pragma once
 
+#include <queue>
+#include <mutex>
+#include <condition_variable>
 #include <chrono>
-#include <cstddef>
+#include <memory>
+#include <atomic>
 
-typedef int SOCKET;
- 
+#ifdef _WIN32
+    #include <winsock2.h>
+    typedef SOCKET SOCKET;
+#else
+    typedef int SOCKET;
+#endif
+
 class ConnectionQueue {
 public:
     explicit ConnectionQueue(size_t maxSize);
@@ -18,7 +27,9 @@ public:
     void shutdown();
 
 private:
-    // Implementação será desenvolvida nas próximas partes
+    mutable std::mutex mutex_;
+    std::condition_variable condition_;
+    std::queue<SOCKET> queue_;
     size_t maxSize_;
-    bool shutdown_;
+    std::atomic<bool> shutdown_;
 };
