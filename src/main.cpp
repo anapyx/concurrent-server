@@ -86,6 +86,7 @@ void printUsage() {
     std::cout << "  -t, --threads <num>      Número de threads trabalhadoras (padrão: 4)\n";
     std::cout << "  -d, --docroot <caminho>  Diretório raiz dos documentos (padrão: ./www)\n";
     std::cout << "  -h, --help               Mostrar esta mensagem de ajuda\n";
+    std::cout << "  --stats                  Mostrar estatísticas do servidor em execução\n";
     std::cout << "\nOpções de Teste:\n";
     std::cout << "  --test-logger            Executar apenas testes do sistema de logging\n";
     std::cout << "  --test-threads <num>     Número de threads para teste (padrão: 5)\n";
@@ -93,6 +94,7 @@ void printUsage() {
     std::cout << "\nExemplos:\n";
     std::cout << "  ./concurrent-server                           # Iniciar servidor HTTP\n";
     std::cout << "  ./concurrent-server --port 9090 --threads 8  # Servidor personalizado\n";
+    std::cout << "  ./concurrent-server --stats                   # Mostrar estatísticas\n";
     std::cout << "  ./concurrent-server --test-logger             # Testar apenas logging\n";
     std::cout << "  ./concurrent-server --test-logger --test-threads 10  # Teste com 10 threads\n";
 }
@@ -111,6 +113,14 @@ int main(int argc, char* argv[]) {
         int logsPerThread = cli.getIntOption("--test-logs", 10);
         
         runLoggerTests(numThreads, logsPerThread);
+        return 0;
+    }
+    
+    // Mostrar estatísticas do servidor (modo daemon)
+    if (cli.hasFlag("--stats")) {
+        std::cout << "=== Estatísticas do Servidor HTTP ===" << std::endl;
+        std::cout << "Para implementar: conectar a instância em execução" << std::endl;
+        std::cout << "Status: Funcionalidade será adicionada na próxima versão" << std::endl;
         return 0;
     }
     
