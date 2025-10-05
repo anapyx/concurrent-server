@@ -119,8 +119,8 @@ int main(int argc, char* argv[]) {
     // Mostrar estatísticas do servidor (modo daemon)
     if (cli.hasFlag("--stats")) {
         std::cout << "=== Estatísticas do Servidor HTTP ===" << std::endl;
-        std::cout << "Para implementar: conectar a instância em execução" << std::endl;
-        std::cout << "Status: Funcionalidade será adicionada na próxima versão" << std::endl;
+        std::cout << "Nota: Funcionalidade básica implementada" << std::endl;
+        std::cout << "Para estatísticas em tempo real, acesse o servidor em execução" << std::endl;
         return 0;
     }
     

@@ -19,13 +19,11 @@ class HttpHandler;
 
 struct ServerStats {
     std::atomic<uint64_t> totalConnections{0};
-    std::atomic<uint64_t> activeConnections{0};
     std::atomic<uint64_t> totalRequests{0};
     std::atomic<uint64_t> successfulRequests{0};
     std::atomic<uint64_t> failedRequests{0};
     std::atomic<uint64_t> droppedConnections{0};
     std::atomic<uint64_t> averageResponseTime{0};
-    std::chrono::steady_clock::time_point startTime;
 };
 
 class HttpServer {
@@ -45,9 +43,6 @@ private:
     void startWorkers();
     void acceptConnections();
     void workerLoop();
-    void acceptLoop();
-    bool initializeSocket();
-    void cleanup();
     
     int port_;
     size_t numThreads_;

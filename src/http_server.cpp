@@ -4,6 +4,7 @@
 #include "http_handler.h"
 #include "logger.h"
 #include <stdexcept>
+#include <iostream>
 
 #ifdef _WIN32
     #include <winsock2.h>
@@ -110,6 +111,20 @@ bool HttpServer::isRunning() const {
 
 const ServerStats& HttpServer::getStats() const {
     return *stats_;
+}
+
+void HttpServer::printStats() const {
+    std::cout << "=== Estatísticas do Servidor ===" << std::endl;
+    std::cout << "Conexões totais: " << stats_->totalConnections.load() << std::endl;
+    std::cout << "Requests bem-sucedidas: " << stats_->successfulRequests.load() << std::endl;
+    std::cout << "Requests com falha: " << stats_->failedRequests.load() << std::endl;
+    std::cout << "Conexões descartadas: " << stats_->droppedConnections.load() << std::endl;
+    std::cout << "Tempo médio de resposta: " << stats_->averageResponseTime.load() << "ms" << std::endl;
+    
+    uint64_t total = stats_->successfulRequests.load() + stats_->failedRequests.load();
+    if (total > 0) {
+        std::cout << "Taxa de sucesso: " << (100.0 * stats_->successfulRequests.load() / total) << "%" << std::endl;
+    }
 }
 
 void HttpServer::startWorkers() {
